@@ -29,13 +29,14 @@ const server = http.createServer(async (req, res) => {
 			req.on('data', chunk => {
 				body+=chunk;
 			});
-			req.on('end', () => {
+			req.on('end', async () => {
 				const data = JSON.parse(body);
 				if (!data.text.trim()) {
 					const response = {
 						success: false,
 						message: 'Text in post is empty',
 						post: {
+							title: false,
 							text: false,
 							author: data.author
 						},
@@ -43,20 +44,32 @@ const server = http.createServer(async (req, res) => {
 					};
 					res.writeHead(200, {'Content-Type': 'application/json'});
 					res.end(JSON.stringify(response));
-				} else {
-					console.log('[Body]: '+	body);
-					console.log('[Text]: '+data.text);
-					console.log('[Author]: '+data.author);
+					return;
+				} 
+				try {
+					const [result] = await db.execute(
+						'INSERT INTO posts(title, text, author) VALUES(?, ?, ?)', [data.title, data.text, data.author]);
 					const response = {
 						success: true,	
-						message: 'Post is correct added.',
+						message: 'Post added.',
 						post: {
+							id: result.insertId,
+							title: data.title,
 							text: data.text,
 							author: data.author
 						},
 						error: false
 					};
-					res.writeHead(200, {'Content-Type': 'application/json'});
+					res.writeHead(201, {'Content-Type': 'application/json; charset=utf-8'});
+					res.end(JSON.stringify(response));
+				} catch (error) {
+					console.log('[ERROR]: '+error);
+					const response = {
+						success: false,
+						message: 'Database error',
+						error: error
+					};
+					res.writeHead(500, {'Content-Type': 'application/json; charset=utf-8'});
 					res.end(JSON.stringify(response));
 				}
 			});

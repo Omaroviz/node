@@ -1,10 +1,12 @@
-const input = document.querySelector('#text');
+const title = document.querySelector('#title');
+const text = document.querySelector('#text');
 const btn = document.querySelector('#send');
 const result = document.querySelector('#result');
 
 btn.addEventListener('click', () => {
 	const data = {
-		text: input.value,
+		title: title.value,
+		text: text.value,
 		author: 'SNBZK_v2'
 	};
 	fetch('/posts', {
@@ -19,7 +21,7 @@ btn.addEventListener('click', () => {
 			result.textContent = data.message;
 		} else {
 			console.log(data);
-			result.textContent = data.text;
+			result.textContent = data.post.text;
 		}
 	});
 });
