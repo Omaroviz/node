@@ -18,8 +18,9 @@ const server = http.createServer((req, res) => {
 		console.log('User is want /posts');
 		let body = '';
 		const response = {
-			text: 'teext',
-			author: 'SNBZK'
+			success: true,
+			message: 'Data is correct pulled',
+			error: false
 		};
 		req.on('data', chunk => {
 			body+=chunk;

@@ -1,18 +1,25 @@
 console.log('HELLO FROM client.JS!');
 
-const data = {
-	text: 'hello, #39hJSn',
-	author: 'SNBZK[client.js]'
-};
+const name = document.querySelector('#name');
+const author = document.querySelector('#author');
+const btn = document.querySelector('#btn');
 
-fetch('/posts', {
-	method: 'POST',
-	headers: {'Content-Type': 'application/json; charset=utf-8'},
-	body: JSON.stringify(data)
-})
-.then(response => response.json())
-.then(data => {
-	console.log(data);
+btn.addEventListener('click', () => {
+	const data = {
+		text: name.value,
+		author: author.value
+	};
+
+	fetch('/posts', {
+		method: 'POST',
+		headers: {'Content-Type': 'application/json; charset=utf-8'},
+		body: JSON.stringify(data)
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data);
+	});
+
 });
 
 

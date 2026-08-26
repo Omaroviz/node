@@ -2,9 +2,21 @@
 <html lang='ru'>
 <head>
 	<title>index.html</title>
+	<style>
+		body {
+			font-family: Arial;
+		}
+		.title {
+			margin: 0;
+			padding: 0
+		}
+	</style>
 </head>
 <body>
-	hello, HTML!!!
+	<h2 class='title'>Create a vocaloid:</h2>
+	<p class='title'>Enter a name is vocaloid: <input type='text' id='name' placeholder='' required></p>
+	<p class='title'> Enter an author is vocaloid: <input type='text' id='author' placeholder='' required></p>
+	<button type='submit' id='btn'>Enter</button>
 	<script src='./client.js'></script>
 </body>
 </html>
