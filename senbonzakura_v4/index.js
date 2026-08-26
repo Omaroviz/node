@@ -23,9 +23,12 @@ const server = http.createServer((req, res) => {
 		req.on('data', chunk => {
 			body+=chunk;
 		});
-		req.
+		req.on('end', () => {	
+			const date = JSON.parse(body);
+			console.log(date.text);
+		});
 		res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
-		res.write(JSON.stringify(response));
+		res.end(JSON.stringify(response));
 	}
 });
 
