@@ -25,6 +25,13 @@ const server = http.createServer((req, res) => {
 		req.on('end', () => {
 			console.log(body);
 		});
+		const response = {
+			success: true,
+			message: '[index.js] Pull API-request',
+			error: false
+		};
+		res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+		res.end(JSON.stringify(response));
 	}
 });
 
