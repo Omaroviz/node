@@ -1,5 +1,6 @@
 import http from 'node:http';
 import fs from 'node:fs';
+import db from './db.js';
 
 const server = http.createServer((req, res) => {
 	if (req.method === 'GET' && req.url === '/') {
@@ -25,7 +26,7 @@ const server = http.createServer((req, res) => {
 		});
 		req.on('end', () => {	
 			const date = JSON.parse(body);
-			console.log(date.text);
+			console.log(date);
 		});
 		res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
 		res.end(JSON.stringify(response));

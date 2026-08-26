@@ -1,8 +1,8 @@
 console.log('HELLO FROM client.JS!');
 
 const data = {
-	text: 'datadd',
-	author: 'SNBZK'
+	text: 'hello, #39hJSn',
+	author: 'SNBZK[client.js]'
 };
 
 fetch('/posts', {
