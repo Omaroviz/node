@@ -22,12 +22,20 @@ btn.addEventListener('click', () => {
 			switch (data.error) {
 				case 4482:
 					console.log('Error database\'s.');
+					break;
 				case 4421:
 					console.log('Empty inputs!');
+					break;
+				default:
+					console.log('Unknown error');
+					break;
 			}
 		} 
 		console.log(data);
 	});
+	name.value = '';
+	code.value = '';
+	author.value = '';
 });
 
 
