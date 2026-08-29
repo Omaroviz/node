@@ -85,7 +85,28 @@ const server = http.createServer(async (req, res) => {
 			console.log(error);
 		}
 	}
-
+	if (req.method === 'PUT' && req.url.startsWith('/vocaloid/')) {
+		const parts = req.url.split('/');
+		let body = '';
+		req.on('data', chunk => {
+			body+=chunk;
+		});
+		req.on('end', async () => {
+			const data = JSON.parse(body);
+			console.log(data);
+			let [result] = await db.execute(
+				'UPDATE vocaloid SET name = ?, code = ?, author = ? WHERE id = ?', 
+				[data.name, data.code, data.author, parts[2]]
+			);
+			const response = {
+				success: true,
+				message: 'Data is update,',
+				error: false
+			};
+			res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
+			res.end(JSON.stringify(response));
+		});
+	}
 });
 
 // Project is finaled.

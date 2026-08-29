@@ -13,22 +13,56 @@ fetch('/show')
 	console.log(data);
 	let html = '';
 	for (let i = 0; i < data.length; i++) {
-		html += `<p>Name: ${data[i]['name']}<br>Code: ${data[i]['code']}<br>Author: ${data[i]['author']}<br><button type='submit' id='delete' data-id="${data[i]['id']}">Delete</button></p>`;
+		html += `<p>
+			Name: ${data[i]['name']}<br>
+			Code: ${data[i]['code']}<br>
+			Author: ${data[i]['author']}<br>
+			<button type='submit' class='delete' data-id="${data[i]['id']}">Delete</button>
+			<button type='submit' class='update' data-id="${data[i]['id']}">Update</button>
+			</p>`;
 	}
 	console.log('what');
 	posts.innerHTML = html;
 	posts.addEventListener('click', event => {
-		if (!event.target.dataset.id) return;
 	        const id = event.target.dataset.id;
-	       	console.log('Delete:', id);
-		fetch(`/vocaloid/${id}`, {
-			method: 'DELETE'
-		})
-		.then(response => response.json())
-		.then(data => {
-			console.log(data);
-			showPosts();
-		});
+
+		if (!id) return;
+		
+		if (event.target.classList.contains('delete')) {
+		       	console.log('Delete:', id);
+			fetch(`/vocaloid/${id}`, {
+				method: 'DELETE'
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				showPosts();
+			});
+			return;
+		}
+		if (event.target.classList.contains('update')) {
+			console.log('Update: '+id);
+			const newName = 'New name:';
+			const newCode = 'New code:';
+			const newAuthor = 'New author:';
+			if (!newName || !newCode || !newAuthor) {
+				return;
+			}
+			fetch(`/vocaloid/${id}`, {
+				method: 'PUT',
+				headers: {'Content-Type': 'applicaion/json; charset=utf-8'},
+				body: JSON.stringify({
+					name: newName.trim(),
+					code: newCode.trim(),
+					author: newAuthor.trim(),
+				})
+			})
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				showPosts();
+			});
+		}
 	});
 });
 
