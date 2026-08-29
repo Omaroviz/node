@@ -1,0 +1,1 @@
+Fisrt version class 'Sayonara'.
