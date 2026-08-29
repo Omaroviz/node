@@ -38,5 +38,18 @@ btn.addEventListener('click', () => {
 	author.value = '';
 });
 
-
+fetch('/show', {
+	method: 'POST',
+	headers: {'Content-Type': 'application/json; charset=utf-8'},
+})
+.then(response => response.json())
+.then(data => {
+	const list = document.querySelector('#names-list');
+	let htmlContent = '';
+	// console.log(data[0]['name']);
+	for (let i = 0; i < data.length; i++) {
+		htmlContent += `<p>Name: ${data[i]['name']}<br>Code: ${data[i]['code']}<br>Author: ${data[i]['author']}</p>`;
+	}
+	list.innerHTML = htmlContent;
+});
 
