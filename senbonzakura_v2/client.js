@@ -8,7 +8,7 @@ btn.addEventListener('click', () => {
 		title: title.value,
 		text: text.value,
 		author: 'SNBZK_v2'
-	};
+	m};
 	fetch('/posts', {
 		method: 'POST',
 		headers: {'Content-Type': 'application/json'},
