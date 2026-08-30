@@ -23,7 +23,11 @@ fetch('/show')
 	}
 	console.log('what');
 	posts.innerHTML = html;
-	posts.addEventListener('click', event => {
+});
+
+}
+
+posts.addEventListener('click', event => {
 	        const id = event.target.dataset.id;
 
 		if (!id) return;
@@ -42,9 +46,9 @@ fetch('/show')
 		}
 		if (event.target.classList.contains('update')) {
 			console.log('Update: '+id);
-			const newName = 'New name:';
-			const newCode = 'New code:';
-			const newAuthor = 'New author:';
+			const newName = prompt('New name:');
+			const newCode = prompt('New code:');
+			const newAuthor = prompt('New author:');
 			if (!newName || !newCode || !newAuthor) {
 				return;
 			}
@@ -64,10 +68,6 @@ fetch('/show')
 			});
 		}
 	});
-});
-
-}
-
 
 showPosts();
 
@@ -89,6 +89,9 @@ btn.addEventListener('click', () => {
 			console.error(data.message)
 		} 
 		console.log(data);
+		name.value = '';
+		code.value = '';
+		author.value = '';
 		showPosts();
 	});
 

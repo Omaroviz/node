@@ -69,6 +69,7 @@ const server = http.createServer(async (req, res) => {
 	}
 	if (req.method === 'DELETE' && req.url.startsWith('/vocaloid/')) {
 		const parts = req.url.split('/');
+		console.log('Delete: '+parts[2]);
 		try {
 			let [result] = await db.execute(
 				'DELETE FROM vocaloid WHERE id = ?',
@@ -87,6 +88,7 @@ const server = http.createServer(async (req, res) => {
 	}
 	if (req.method === 'PUT' && req.url.startsWith('/vocaloid/')) {
 		const parts = req.url.split('/');
+		console.log('Update: '+parts[2]);
 		let body = '';
 		req.on('data', chunk => {
 			body+=chunk;
