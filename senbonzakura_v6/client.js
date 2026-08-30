@@ -54,7 +54,7 @@ posts.addEventListener('click', event => {
 			}
 			fetch(`/vocaloid/${id}`, {
 				method: 'PUT',
-				headers: {'Content-Type': 'applicaion/json; charset=utf-8'},
+				headers: {'Content-Type': 'application/json; charset=utf-8'},
 				body: JSON.stringify({
 					name: newName.trim(),
 					code: newCode.trim(),

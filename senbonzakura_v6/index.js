@@ -23,14 +23,19 @@ const server = http.createServer(async (req, res) => {
 			body+=chunk;
 		});
 		req.on('end', async () => {
-			const data = JSON.parse(body);
+			const datanot = JSON.parse(body);
+			const data = {
+				name: datanot.name.trim(),    // Уже обрезанное значение
+				code: datanot.code.trim(),
+				author: datanot.author.trim()
+			};
 			if (!data.name || !data.code || !data.author) {
 				const response = {
 					success: false,
 					message: 'Input\'s empty',
 					error: true
 				};
-				res.writeHead(500, {'Content-Type': 'application/json; charset=utf-8'});
+				res.writeHead(400, {'Content-Type': 'application/json; charset=utf-8'});
 				res.end(JSON.stringify(response));
 				return;
 			}
@@ -63,7 +68,7 @@ const server = http.createServer(async (req, res) => {
 	if (req.method === 'GET' && req.url === '/show') {
 		console.log('/show');
 		const [result] = await db.query('SELECT * FROM vocaloid');
-		console.log(result);
+		// console.log(result);
 		res.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
 		res.end(JSON.stringify(result));
 	}
